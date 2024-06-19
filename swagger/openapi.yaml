@@ -8,7 +8,7 @@ info:
   
   
 servers:
-  - url: http://127.0.0.1:8010
+  - url: http://localhost:8010
   - url: http://cloud.aws.fiteasy
   
   
@@ -263,6 +263,100 @@ paths:
         "500":
           $ref: "#/components/responses/ServerError"
           
+# Studio
+  /studios:
+    post:
+      tags:
+        - studio
+      summary: Create studio
+      description: This API creates new studio resource entry if the data provided is correct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateStudioRequest'
+      responses:
+        "200":
+          $ref: "#/components/responses/CreateStudioOutput"
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/ServerError"
+  /studios/users/{id}:
+    get:
+      tags:
+        - studio
+      summary: Get all ratings by studio ID
+      description: This API returns user details if the data provided is correct
+      parameters:
+        - $ref: "#/components/parameters/resourceId"
+      responses:
+        "200":
+          $ref: "#/components/responses/GetStudiosByUserOutput"
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/ServerError"
+          
+  /studios/{id}:
+    get:
+      tags:
+        - studio
+      summary: Get rating by ID
+      description: This API returns user details if the data provided is correct
+      parameters:
+        - $ref: "#/components/parameters/resourceId"
+      responses:
+        "200":
+          $ref: "#/components/responses/GetStudioOutput"
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/ServerError"
+    put:
+      tags:
+        - studio
+      summary: Update rating by ID
+      description: This API returns user details if the data provided is correct
+      parameters:
+        - $ref: "#/components/parameters/resourceId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateStudioRequest'
+      responses:
+        "200":
+          $ref: "#/components/responses/GetStudioOutput"
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/ServerError"
+    delete:
+      tags:
+        - studio
+      summary: Delete rating by ID
+      description: This API returns user details if the data provided is correct
+      parameters:
+        - $ref: "#/components/parameters/resourceId"
+      responses:
+        "200":
+          $ref: "#/components/responses/UserOutput"
+        "400":
+          $ref: "#/components/responses/BadRequestError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "500":
+          $ref: "#/components/responses/ServerError"
+          
 # Categories APIs
   /categories:
     post:
@@ -419,90 +513,6 @@ paths:
     delete:
       tags:
         - studio ratings
-      summary: Delete rating by ID
-      description: This API returns user details if the data provided is correct
-      parameters:
-        - $ref: "#/components/parameters/resourceId"
-      responses:
-        "200":
-          $ref: "#/components/responses/UserOutput"
-        "400":
-          $ref: "#/components/responses/BadRequestError"
-        "404":
-          $ref: "#/components/responses/NotFoundError"
-        "500":
-          $ref: "#/components/responses/ServerError"
-          
-# Studio
-  /studios:
-    post:
-      tags:
-        - studio
-      summary: Create rating for studio
-      description: This API returns user details if the data provided is correct
-      responses:
-        "200":
-          $ref: "#/components/responses/UserOutput"
-        "400":
-          $ref: "#/components/responses/BadRequestError"
-        "404":
-          $ref: "#/components/responses/NotFoundError"
-        "500":
-          $ref: "#/components/responses/ServerError"
-  /studios/users/{id}:
-    get:
-      tags:
-        - studio
-      summary: Get all ratings by studio ID
-      description: This API returns user details if the data provided is correct
-      parameters:
-        - $ref: "#/components/parameters/resourceId"
-      responses:
-        "200":
-          $ref: "#/components/responses/UserOutput"
-        "400":
-          $ref: "#/components/responses/BadRequestError"
-        "404":
-          $ref: "#/components/responses/NotFoundError"
-        "500":
-          $ref: "#/components/responses/ServerError"
-          
-  /studios/{id}:
-    get:
-      tags:
-        - studio
-      summary: Get rating by ID
-      description: This API returns user details if the data provided is correct
-      parameters:
-        - $ref: "#/components/parameters/resourceId"
-      responses:
-        "200":
-          $ref: "#/components/responses/UserOutput"
-        "400":
-          $ref: "#/components/responses/BadRequestError"
-        "404":
-          $ref: "#/components/responses/NotFoundError"
-        "500":
-          $ref: "#/components/responses/ServerError"
-    put:
-      tags:
-        - studio
-      summary: Update rating by ID
-      description: This API returns user details if the data provided is correct
-      parameters:
-        - $ref: "#/components/parameters/resourceId"
-      responses:
-        "200":
-          $ref: "#/components/responses/UserOutput"
-        "400":
-          $ref: "#/components/responses/BadRequestError"
-        "404":
-          $ref: "#/components/responses/NotFoundError"
-        "500":
-          $ref: "#/components/responses/ServerError"
-    delete:
-      tags:
-        - studio
       summary: Delete rating by ID
       description: This API returns user details if the data provided is correct
       parameters:
@@ -1041,6 +1051,103 @@ components:
       items:
         $ref : '#/components/schemas/MembershipEntity'
       description: "Paginated List of Passes Object"
+      
+    # All about studios
+    CreateStudioRequest:
+      type: object
+      properties:
+        user-id:
+          allOf:
+            - $ref: '#/components/schemas/resourceId'
+          description: 'user-id of registered user as owner role'
+        studio:
+          $ref: '#/components/schemas/StudioRequest'
+          
+    StudioRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 'registered studio name'
+          example: 'Johnson Fitness'
+        geolocation:
+            $ref: '#/components/schemas/GeolocationObject'
+        established_since:
+          type: string
+          format: date
+        category-id:
+          allOf:
+            - $ref: '#/components/schemas/resourceId'
+          description: 'category-id to assign to the studio'
+        address:
+          type: string
+          description: 'full address of the studio'
+          example: 'Near Gandhi Marg, Raia, Salcete, South-Goa'
+        pincode:
+          type: number
+          description: 'area pincode of the address provided'
+          example: 403720
+        type:
+          type: string
+          description: 'studio facility type'
+          example:
+            - 'Gym'
+            - 'Yoga'
+            - 'Calisthinics'  # Check the spelling
+            
+    StudioOutputObject:
+      type: object
+      properties:
+        status:
+          type: number
+          example: 201
+        studio:
+          allOf:
+            - $ref: '#/components/schemas/StudioObject'
+            
+    StudioObject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: 'unique identifier of pass'
+        name:
+          type: string
+          description: 'registered studio name'
+          example: 'Johnson Fitness'
+        geolocation:
+            $ref: '#/components/schemas/GeolocationObject'
+        established_since:
+          type: string
+          format: date
+        category:
+           allOf:
+            - $ref: '#/components/schemas/CategoryObject'
+        address:
+          type: string
+          description: 'full address of the studio'
+          example: 'Near Gandhi Marg, Raia, Salcete, South-Goa'
+        pincode:
+          type: number
+          description: 'area pincode of the address provided'
+          example: 403720
+        type:
+          type: string
+          description: 'studio facility type'
+          example:
+            - 'Gym'
+            - 'Yoga'
+            - 'Calisthinics'  # Check the spelling
+            
+    AllStudiosByUserListObject:
+      type: array
+      items:
+        $ref: '#/components/schemas/StudioObject'
+      description: "Paginated List of Passes Object"
+      
+    StudioOutputEntity:
+      $ref: '#/components/schemas/StudioObject'
           
 # API responses
   responses:
@@ -1098,6 +1205,24 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/AllMembershipsList'
+    CreateStudioOutput:
+      description: Created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StudioOutputObject'
+    GetStudiosByUserOutput:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AllStudiosByUserListObject'
+    GetStudioOutput:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StudioOutputEntity'
 # Other Responses
     BadRequestError:
       description: Bad Request
@@ -1117,34 +1242,3 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ServerError'
-# Not Required
-    GetPaginatedAuctionsOutput:
-      description: OK
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PaginatedAuctionDTO'
-    GetAuctionLotsListOutput:
-      description: OK
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AuctionLotDTOList'
-    GetAuctionLotOutput:
-      description: OK
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AuctionLotDTO'
-    GetExportAuctionLotsReportOutput:
-      description: OK
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ExportResponse'
-    GetBulkImportAuctionLotsOutput:
-      description: OK
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BulkImportResponse'
