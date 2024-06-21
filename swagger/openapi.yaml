@@ -288,7 +288,11 @@ paths:
     get:
       tags:
         - studio
+<<<<<<< HEAD
       summary: Get all ratings by studio ID
+=======
+      summary: Get all studios by users ID
+>>>>>>> b9e01a6 (made changes to swagger doc)
       description: This API returns user details if the data provided is correct
       parameters:
         - $ref: "#/components/parameters/resourceId"
@@ -306,7 +310,7 @@ paths:
     get:
       tags:
         - studio
-      summary: Get rating by ID
+      summary: Get studio by ID
       description: This API returns user details if the data provided is correct
       parameters:
         - $ref: "#/components/parameters/resourceId"
@@ -322,7 +326,7 @@ paths:
     put:
       tags:
         - studio
-      summary: Update rating by ID
+      summary: Update studio by ID
       description: This API returns user details if the data provided is correct
       parameters:
         - $ref: "#/components/parameters/resourceId"
@@ -343,13 +347,13 @@ paths:
     delete:
       tags:
         - studio
-      summary: Delete rating by ID
+      summary: Delete studio by ID
       description: This API returns user details if the data provided is correct
       parameters:
         - $ref: "#/components/parameters/resourceId"
       responses:
         "200":
-          $ref: "#/components/responses/UserOutput"
+          $ref: "#/components/responses/DeleteResourceOutput"
         "400":
           $ref: "#/components/responses/BadRequestError"
         "404":
@@ -368,10 +372,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreatePassRequestInput'
+              $ref: '#/components/schemas/CreateCategoryRequestInput'
       responses:
         "200":
-          $ref: "#/components/responses/UserOutput"
+          $ref: "#/components/responses/GetCategoryOutput"
         "400":
           $ref: "#/components/responses/BadRequestError"
         "404":
@@ -385,7 +389,7 @@ paths:
       description: This API returns user details if the data provided is correct
       responses:
         "200":
-          $ref: "#/components/responses/UserOutput"
+          $ref: "#/components/responses/GetCategoriesOutput"
         "400":
           $ref: "#/components/responses/BadRequestError"
         "404":
@@ -402,7 +406,7 @@ paths:
         - $ref: "#/components/parameters/resourceId"
       responses:
         "200":
-          $ref: "#/components/responses/UserOutput"
+          $ref: "#/components/responses/GetCategoryOutput"
         "400":
           $ref: "#/components/responses/BadRequestError"
         "404":
@@ -418,7 +422,7 @@ paths:
         - $ref: "#/components/parameters/resourceId"
       responses:
         "200":
-          $ref: "#/components/responses/UserOutput"
+          $ref: "#/components/responses/GetCategoryOutput"
         "400":
           $ref: "#/components/responses/BadRequestError"
         "404":
@@ -434,7 +438,7 @@ paths:
         - $ref: "#/components/parameters/resourceId"
       responses:
         "200":
-          $ref: "#/components/responses/UserOutput"
+          $ref: "#/components/responses/DeleteResourceOutput"
         "400":
           $ref: "#/components/responses/BadRequestError"
         "404":
@@ -451,9 +455,14 @@ paths:
       description: This API returns user details if the data provided is correct
       parameters:
         - $ref: "#/components/parameters/resourceId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateStudioRatingRequest'
       responses:
         "200":
-          $ref: "#/components/responses/UserOutput"
+          $ref: "#/components/responses/CreatedStudioRatingOutput"
         "400":
           $ref: "#/components/responses/BadRequestError"
         "404":
@@ -469,7 +478,7 @@ paths:
         - $ref: "#/components/parameters/resourceId"
       responses:
         "200":
-          $ref: "#/components/responses/UserOutput"
+          $ref: "#/components/responses/GetAllStudioRatingsOutput"
         "400":
           $ref: "#/components/responses/BadRequestError"
         "404":
@@ -487,7 +496,7 @@ paths:
         - $ref: "#/components/parameters/resourceId"
       responses:
         "200":
-          $ref: "#/components/responses/UserOutput"
+          $ref: "#/components/responses/GetStudioRatingOutput"
         "400":
           $ref: "#/components/responses/BadRequestError"
         "404":
@@ -503,7 +512,7 @@ paths:
         - $ref: "#/components/parameters/resourceId"
       responses:
         "200":
-          $ref: "#/components/responses/UserOutput"
+          $ref: "#/components/responses/GetStudioRatingOutput"
         "400":
           $ref: "#/components/responses/BadRequestError"
         "404":
@@ -519,7 +528,7 @@ paths:
         - $ref: "#/components/parameters/resourceId"
       responses:
         "200":
-          $ref: "#/components/responses/UserOutput"
+          $ref: "#/components/responses/DeleteResourceOutput"
         "400":
           $ref: "#/components/responses/BadRequestError"
         "404":
@@ -534,29 +543,34 @@ paths:
         - entry logs
       summary: Create studio entry log
       description: This API returns user details if the data provided is correct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateStudioEntryLogRequest'
       responses:
-        "200":
-          $ref: "#/components/responses/UserOutput"
+        "201":
+          $ref: "#/components/responses/CreatedMemberStudioLogOutput"
         "400":
           $ref: "#/components/responses/BadRequestError"
         "404":
           $ref: "#/components/responses/NotFoundError"
         "500":
           $ref: "#/components/responses/ServerError"
-    get:
-      tags:
-        - entry logs
-      summary: Get all entry logs
-      description: This API returns user details if the data provided is correct
-      responses:
-        "200":
-          $ref: "#/components/responses/UserOutput"
-        "400":
-          $ref: "#/components/responses/BadRequestError"
-        "404":
-          $ref: "#/components/responses/NotFoundError"
-        "500":
-          $ref: "#/components/responses/ServerError"
+    # get:
+    #   tags:
+    #     - entry logs
+    #   summary: Get all entry logs
+    #   description: This API returns user details if the data provided is correct
+    #   responses:
+    #     "200":
+    #       $ref: "#/components/responses/UserOutput"
+    #     "400":
+    #       $ref: "#/components/responses/BadRequestError"
+    #     "404":
+    #       $ref: "#/components/responses/NotFoundError"
+    #     "500":
+    #       $ref: "#/components/responses/ServerError"
 
 # Components begins from here
 components:
@@ -618,25 +632,6 @@ components:
         format: int32
 
   schemas:
-    PaginatedAuctionDTO:
-      type: object
-      properties:
-        auctionData:
-          type: array
-          items:
-            $ref : '#/components/schemas/AuctionDTO'
-          description: "Auction Data"
-        totalPages:
-          type: integer
-          format: int32
-          description: "Total number of pages"
-          example: 10
-        totalAuctionEntries:
-          type: integer
-          format: int64
-          description: "Total number of entries"
-          example: 10
-          
     ServiceError:
       type: object
       title: Service Error
@@ -672,59 +667,6 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/FieldError'
-
-    CreateAuctionLotInput:
-      required:
-        - auctionLotDetails
-      type: object
-      properties:
-        auctionLotDetails:
-          $ref : '#/components/schemas/AuctionLot'
-          description: "Auction Lot Details"
-        auctionLotImages:
-          type: array
-          items:
-            type: string
-            format: binary
-
-    CreateAuctionInput:
-      required:
-        - auctionData
-      type: object
-      properties:
-        auctionData:
-          #$ref : '#/components/schemas/Auction'
-          description: "Auction Details"
-        imageData:
-          type: string
-          format: binary
-          description: "Image of type (JPEG, JPG or PNG"
-
-    BulkImportInput:
-      required:
-        - mappedColumns
-        - lotsFile
-      type: object
-      properties:
-        mappedColumns:
-          $ref : '#/components/schemas/MappedColumns'
-          description: "Auction Details"
-        lotsFile:
-          type: string
-          format: binary
-          description: "csv file type"
-
-    CreateAuctionLotReportInput:
-      type: object
-      properties:
-        reportType:
-          type: string
-          description: 'report type'
-          example: 'ActiveLot'
-        format:
-          type: string
-          description: "File format type (csv or pdf)"
-          example: 'pdf'
           
 # Actually working of this API belongs here
     
@@ -796,6 +738,7 @@ components:
           description: 'longitude'
           example: '17.7553'
           
+    # Generic Responses
     ResourceCreatedObject:
       type: object
       properties:
@@ -807,6 +750,30 @@ components:
           type: number
           description: 'success code'
           example: 201
+          
+    ResourceDeleteObject:
+      type: object
+      properties:
+        message:
+          type: string
+          description: 'Delete request was success and resource deleted'
+          example: 'resource deleted'
+        status-code:
+          type: number
+          description: 'ok code'
+          example: 200
+          
+    ResourceReadObject:
+      type: object
+      properties:
+        message:
+          type: string
+          description: 'Read request was success and resource fetched'
+          example: 'resource fetched'
+        status-code:
+          type: number
+          description: 'ok code'
+          example: 200
           
     LoginTokenObject:
       type: object
@@ -936,27 +903,13 @@ components:
             - $ref: '#/components/schemas/PassObject'
         category:
            allOf:
-            - $ref: '#/components/schemas/CategoryObject'
+            - $ref: '#/components/schemas/CategoryDTOObject'
               
     AllPassesList:
       type: array
       items:
         $ref : '#/components/schemas/PassObject'
       description: "Paginated List of Passes Object"
-      
-          
-    # All about Category
-    CategoryObject:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: 'unique identifier of category'
-        name:
-          type: string
-          description: 'Name given to pass'
-          example: 'Gold'
           
     # All about Membership
     CreateMembershipRequest:
@@ -1123,7 +1076,7 @@ components:
           format: date
         category:
            allOf:
-            - $ref: '#/components/schemas/CategoryObject'
+            - $ref: '#/components/schemas/CategoryDTOObject'
         address:
           type: string
           description: 'full address of the studio'
@@ -1148,6 +1101,87 @@ components:
       
     StudioOutputEntity:
       $ref: '#/components/schemas/StudioObject'
+      
+    # All about Category
+    CategoryDTOObject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: 'unique identifier of category'
+        name:
+          type: string
+          description: 'Name given to category'
+          example: 'Gold'
+          
+    CreateCategoryRequestInput:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 'Name given to category'
+          example: 'Gold'
+          
+    AllCategoriesList:
+      type: array
+      items:
+        $ref : '#/components/schemas/CategoryDTOObject'
+      description: "Paginated List of Passes Object"
+      
+    # All about studios rating
+    CreateStudioRatingRequest:
+      type: object
+      properties:
+        member-id:
+          allOf:
+            - $ref: '#/components/schemas/resourceId'
+          description: 'member-id of registered user as member role'
+        rate:
+          type: number
+          format: double
+          description: 'User should provide the rating for the studio'
+          example: 3.6
+        feedback:
+          type: string
+          description: 'Feedback about the studio'
+          example: 'Something about the rating, and studio'
+          
+    AllStudioRatingsList:
+      type: array
+      items:
+        $ref : '#/components/schemas/StudioRatingDTOObject'
+      description: "Paginated List of Passes Object"
+      
+    StudioRatingDTOObject:
+      type: object
+      properties:
+        id:
+          allOf:
+            - $ref: '#/components/schemas/resourceId'
+          description: 'ratings id for the studio'
+        rate:
+          type: number
+          format: double
+          description: 'User should provide the rating for the studio'
+          example: 3.6
+        feedback:
+          type: string
+          description: 'Feedback about the studio'
+          example: 'Something about the rating, and studio'
+          
+    # All about members studio entry log
+    CreateStudioEntryLogRequest:
+      type: object
+      properties:
+        member-id:
+          allOf:
+            - $ref: '#/components/schemas/resourceId'
+          description: 'registered user as member, member-id for the studio entry log'
+        studio-id:
+          allOf:
+            - $ref: '#/components/schemas/resourceId'
+          description: 'studio-id for auditing the studio entry'
           
 # API responses
   responses:
@@ -1223,6 +1257,48 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/StudioOutputEntity'
+    GetCategoryOutput:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CategoryDTOObject'
+    GetCategoriesOutput:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AllCategoriesList'
+    CreatedStudioRatingOutput:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResourceCreatedObject'
+    GetAllStudioRatingsOutput:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AllStudioRatingsList'
+    GetStudioRatingOutput:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StudioRatingDTOObject'
+    CreatedMemberStudioLogOutput:
+      description: Created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResourceCreatedObject'
+    DeleteResourceOutput:
+      description: Created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResourceDeleteObject'
 # Other Responses
     BadRequestError:
       description: Bad Request
