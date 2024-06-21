@@ -1,0 +1,1892 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "FitEasy - OpenAPI 3.0",
+    "description": "FitEasy is a pass to all gyms near you, this doc provides APIs",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8010"
+    },
+    {
+      "url": "http://cloud.aws.fiteasy"
+    }
+  ],
+  "tags": [
+    {
+      "name": "auth",
+      "description": "User Authentication and Registration"
+    },
+    {
+      "name": "user",
+      "description": "All about Registered User"
+    },
+    {
+      "name": "pass",
+      "description": "All about Pass type in our system"
+    },
+    {
+      "name": "memberships",
+      "description": "All about Membership retained passes"
+    },
+    {
+      "name": "studio",
+      "description": "All about Fitness centers or studios"
+    },
+    {
+      "name": "entry logs",
+      "description": "All about members entry logs in the fitness centers"
+    },
+    {
+      "name": "category",
+      "description": "All about categories in our system"
+    },
+    {
+      "name": "studio ratings",
+      "description": "All about Fitness centers ratings"
+    }
+  ],
+  "paths": {
+    "/register": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "register user",
+        "description": "This API will create a user to the system that can access the resources based on the user role.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/role"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterUserInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/RegisterUserOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "login user",
+        "description": "This API endpoint allows user to login into the system and access other resources.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginUserInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/LoginOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Find user by ID",
+        "description": "This API returns user details if the data provided is correct",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/resourceId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/UserOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Find user by ID",
+        "description": "This API returns user details if the data provided is correct",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/resourceId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/UserOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/pass": {
+      "post": {
+        "tags": [
+          "pass"
+        ],
+        "summary": "Create new pass resource",
+        "description": "This API returns user details if the data provided is correct",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePassRequestInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/CreatePassOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "pass"
+        ],
+        "summary": "Find all passes available",
+        "description": "This API returns user details if the data provided is correct",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GetPassesOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/pass/{id}": {
+      "get": {
+        "tags": [
+          "pass"
+        ],
+        "summary": "Find pass by ID",
+        "description": "This API returns user details if the data provided is correct",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/resourceId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GetPassOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "pass"
+        ],
+        "summary": "update pass by ID",
+        "description": "This API returns user details if the data provided is correct",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/resourceId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/CreatePassOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/memberships": {
+      "post": {
+        "tags": [
+          "memberships"
+        ],
+        "summary": "Create membership",
+        "description": "This API returns user details if the data provided is correct",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMembershipRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/CreateMembershipOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/memberships/members/{id}": {
+      "get": {
+        "tags": [
+          "memberships"
+        ],
+        "summary": "Find membership pass by user ID",
+        "description": "This API returns user details if the data provided is correct",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/resourceId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GetMembershipsOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/memberships/{id}": {
+      "get": {
+        "tags": [
+          "memberships"
+        ],
+        "summary": "Find membership pass by ID",
+        "description": "This API returns user details if the data provided is correct",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/resourceId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GetMembershipOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "memberships"
+        ],
+        "summary": "update membership pass by ID",
+        "description": "This API returns user details if the data provided is correct",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/resourceId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMembershipRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GetMembershipOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/studios": {
+      "post": {
+        "tags": [
+          "studio"
+        ],
+        "summary": "Create studio",
+        "description": "This API creates new studio resource entry if the data provided is correct",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateStudioRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/CreateStudioOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/studios/users/{id}": {
+      "get": {
+        "tags": [
+          "studio"
+        ],
+        "summary": "Get all studios by users ID",
+        "description": "This API returns user details if the data provided is correct",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/resourceId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GetStudiosByUserOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/studios/{id}": {
+      "get": {
+        "tags": [
+          "studio"
+        ],
+        "summary": "Get studio by ID",
+        "description": "This API returns user details if the data provided is correct",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/resourceId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GetStudioOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "studio"
+        ],
+        "summary": "Update studio by ID",
+        "description": "This API returns user details if the data provided is correct",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/resourceId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateStudioRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GetStudioOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "studio"
+        ],
+        "summary": "Delete studio by ID",
+        "description": "This API returns user details if the data provided is correct",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/resourceId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/DeleteResourceOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/categories": {
+      "post": {
+        "tags": [
+          "category"
+        ],
+        "summary": "Create new category resource",
+        "description": "This API returns user details if the data provided is correct",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCategoryRequestInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GetCategoryOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "category"
+        ],
+        "summary": "Get all categories",
+        "description": "This API returns user details if the data provided is correct",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GetCategoriesOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/categories/{id}": {
+      "get": {
+        "tags": [
+          "category"
+        ],
+        "summary": "Get category by ID",
+        "description": "This API returns user details if the data provided is correct",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/resourceId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GetCategoryOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "category"
+        ],
+        "summary": "Update category by ID",
+        "description": "This API returns user details if the data provided is correct",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/resourceId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GetCategoryOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "category"
+        ],
+        "summary": "Delete category by ID",
+        "description": "This API returns user details if the data provided is correct",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/resourceId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/DeleteResourceOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/ratings/studio/{id}": {
+      "post": {
+        "tags": [
+          "studio ratings"
+        ],
+        "summary": "Create rating for studio",
+        "description": "This API returns user details if the data provided is correct",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/resourceId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateStudioRatingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/CreatedStudioRatingOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "studio ratings"
+        ],
+        "summary": "Get all ratings by studio ID",
+        "description": "This API returns user details if the data provided is correct",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/resourceId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GetAllStudioRatingsOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/ratings/{id}": {
+      "get": {
+        "tags": [
+          "studio ratings"
+        ],
+        "summary": "Get rating by ID",
+        "description": "This API returns user details if the data provided is correct",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/resourceId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GetStudioRatingOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "studio ratings"
+        ],
+        "summary": "Update rating by ID",
+        "description": "This API returns user details if the data provided is correct",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/resourceId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/GetStudioRatingOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "studio ratings"
+        ],
+        "summary": "Delete rating by ID",
+        "description": "This API returns user details if the data provided is correct",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/resourceId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/DeleteResourceOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/entry-logs": {
+      "post": {
+        "tags": [
+          "entry logs"
+        ],
+        "summary": "Create studio entry log",
+        "description": "This API returns user details if the data provided is correct",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateStudioEntryLogRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/CreatedMemberStudioLogOutput"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "role": {
+        "name": "role",
+        "in": "query",
+        "description": "Describes the user to be registered as, if fitness center owner or member.",
+        "required": true,
+        "example": [
+          "owner",
+          "member",
+          "admin"
+        ],
+        "schema": {
+          "type": "string"
+        }
+      },
+      "resourceId": {
+        "name": "id",
+        "in": "path",
+        "description": "ID of resource to return",
+        "required": true,
+        "example": "b3bce38d-94f0-4e6e-8358-cc0b22d1100f",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "auctionId": {
+        "name": "auctionId",
+        "in": "path",
+        "description": "ID of auction to return",
+        "required": true,
+        "example": "1-CPT",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "auctionLotId": {
+        "name": "auctionLotId",
+        "in": "path",
+        "description": "ID of auction lot to return",
+        "required": true,
+        "example": "1-CXS",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "page": {
+        "name": "page",
+        "in": "query",
+        "description": "page number to return",
+        "required": false,
+        "example": 1,
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "size": {
+        "name": "size",
+        "in": "query",
+        "description": "size per page to return",
+        "required": false,
+        "example": 10,
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "schemas": {
+      "ServiceError": {
+        "type": "object",
+        "title": "Service Error",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "errorCode": {
+            "type": "string"
+          },
+          "errorMessage": {
+            "type": "string"
+          }
+        }
+      },
+      "FieldError": {
+        "type": "object",
+        "title": "Field Error",
+        "properties": {
+          "entity": {
+            "type": "string"
+          },
+          "invalidValue": {
+            "type": "string"
+          },
+          "propertyName": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "ServerError": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ServiceError"
+          }
+        ]
+      },
+      "BadRequest": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ServiceError"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "fieldErrors": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/FieldError"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "RegisterUserInput": {
+        "type": "object",
+        "properties": {
+          "firstname": {
+            "type": "string",
+            "description": "first name",
+            "example": "John"
+          },
+          "lastname": {
+            "type": "string",
+            "description": "last name",
+            "example": "Doe"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "email ID",
+            "example": "john.doe@example.com"
+          },
+          "username": {
+            "type": "string",
+            "description": "Unique username for the registration",
+            "example": "john.doe"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "description": "password for authorization",
+            "example": "password@!03$"
+          },
+          "geolocation": {
+            "$ref": "#/components/schemas/GeolocationObject"
+          },
+          "gender": {
+            "type": "string",
+            "description": "gender",
+            "example": "male"
+          },
+          "primary-contact": {
+            "type": "string",
+            "description": "primay contact number",
+            "example": "9822782281"
+          },
+          "secondary-contact": {
+            "type": "string",
+            "description": "secondary contact number",
+            "example": "9822782281"
+          }
+        }
+      },
+      "LoginUserInput": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "Unique username for the registration",
+            "example": "john.doe"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "description": "password for authorization",
+            "example": "password@!03$"
+          }
+        }
+      },
+      "GeolocationObject": {
+        "type": "object",
+        "properties": {
+          "lat": {
+            "type": "number",
+            "description": "latitude",
+            "example": "17.3245"
+          },
+          "long": {
+            "type": "number",
+            "description": "longitude",
+            "example": "17.7553"
+          }
+        }
+      },
+      "ResourceCreatedObject": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "POST request was success and resource created",
+            "example": "resource created"
+          },
+          "status-code": {
+            "type": "number",
+            "description": "success code",
+            "example": 201
+          }
+        }
+      },
+      "ResourceDeleteObject": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Delete request was success and resource deleted",
+            "example": "resource deleted"
+          },
+          "status-code": {
+            "type": "number",
+            "description": "ok code",
+            "example": 200
+          }
+        }
+      },
+      "ResourceReadObject": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Read request was success and resource fetched",
+            "example": "resource fetched"
+          },
+          "status-code": {
+            "type": "number",
+            "description": "ok code",
+            "example": 200
+          }
+        }
+      },
+      "LoginTokenObject": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "gives access to endpoints based on user",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiTUVNQkVSIiwiSXNzdWVyIjoiZml0ZWFzeSIsIlVzZXJuYW1lIjoiam9obi5kb2UiLCJleHAiOjE3MTg3MDU3NDIsImlhdCI6MTcxODcwNDMwMn0.A7q_GxyiN3hvf9gdckasNDgjFQ8AHG3vKi6PZfqYroY"
+          },
+          "refresh-token": {
+            "type": "string",
+            "description": "use when access token has expired",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiTUVNQkVSIiwiSXNzdWVyIjoiZml0ZWFzeSIsIlVzZXJuYW1lIjoiam9obi5kb2UiLCJleHAiOjE3MTg3MDU3NDIsImlhdCI6MTcxODcwNDMwMn0.A7q_GxyiN3hvf9gdckasNDgjFQ8AHG3vKi6PZfqYroY"
+          }
+        }
+      },
+      "UserObject": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "unique id of the user"
+          },
+          "firstname": {
+            "type": "string",
+            "description": "first name",
+            "example": "John"
+          },
+          "lastname": {
+            "type": "string",
+            "description": "last name",
+            "example": "Doe"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "email ID",
+            "example": "john.doe@example.com"
+          },
+          "username": {
+            "type": "string",
+            "description": "Unique username for the registration",
+            "example": "john.doe"
+          },
+          "geolocation": {
+            "$ref": "#/components/schemas/GeolocationObject"
+          },
+          "gender": {
+            "type": "string",
+            "description": "gender",
+            "example": "male"
+          },
+          "primary-contact": {
+            "type": "number",
+            "description": "primay contact number",
+            "example": 9822782281
+          },
+          "secondary-contact": {
+            "type": "number",
+            "description": "secondary contact number",
+            "example": 9822782281
+          },
+          "membership": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/components/schemas/resourceId"
+              }
+            }
+          }
+        }
+      },
+      "UpdateUserRequest": {
+        "$ref": "#/components/schemas/RegisterUserInput"
+      },
+      "resourceId": {
+        "type": "string",
+        "format": "uuid",
+        "description": "membership-id of registered user as member role"
+      },
+      "CreatePassRequestInput": {
+        "type": "object",
+        "properties": {
+          "category-id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "unique category identifier of category required to create pass"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name given to pass",
+            "example": "Gold Hyper V"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal",
+            "description": "price of the pass",
+            "example": 1500
+          },
+          "duration": {
+            "type": "number",
+            "description": "number of months the pass is valid for",
+            "example": 3
+          },
+          "description": {
+            "type": "string",
+            "description": "descriptive information about the pass",
+            "example": "This pass is for members who want to avail gold priviledged gyms category"
+          }
+        }
+      },
+      "PassObject": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "unique identifier of pass"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name given to pass",
+            "example": "Gold Hyper V"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal",
+            "description": "price of the pass",
+            "example": 1500
+          },
+          "duration": {
+            "type": "number",
+            "description": "number of months the pass is valid for",
+            "example": 3
+          },
+          "description": {
+            "type": "string",
+            "description": "descriptive information about the pass",
+            "example": "This pass is for members who want to avail gold priviledged gyms category"
+          }
+        }
+      },
+      "PassOutputObject": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "example": 201
+          },
+          "pass": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PassObject"
+              }
+            ]
+          },
+          "category": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CategoryDTOObject"
+              }
+            ]
+          }
+        }
+      },
+      "AllPassesList": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/PassObject"
+        },
+        "description": "Paginated List of Passes Object"
+      },
+      "CreateMembershipRequest": {
+        "type": "object",
+        "properties": {
+          "member-id": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/resourceId"
+              }
+            ],
+            "description": "member-id of registered user as member role"
+          },
+          "pass-id": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/resourceId"
+              }
+            ],
+            "description": "pass-id of an existing pass, member want to enroll membership with"
+          },
+          "amount": {
+            "type": "number",
+            "format": "decimal",
+            "description": "amount of the membership",
+            "example": 1500
+          },
+          "duration": {
+            "type": "number",
+            "description": "number of months the membership is valid for",
+            "example": 3
+          },
+          "valid-till": {
+            "type": "string",
+            "format": "date",
+            "description": "Pass expiry date"
+          }
+        }
+      },
+      "MembershipObject": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "unique identifier of category"
+          },
+          "amount": {
+            "type": "number",
+            "format": "decimal",
+            "description": "amount of the membership",
+            "example": 1500
+          },
+          "duration": {
+            "type": "number",
+            "description": "number of months the membership is valid for",
+            "example": 3
+          },
+          "valid-till": {
+            "type": "string",
+            "format": "date",
+            "description": "Pass expiry date"
+          }
+        }
+      },
+      "MembershipEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "unique identifier of category"
+          },
+          "amount": {
+            "type": "number",
+            "format": "decimal",
+            "description": "amount of the membership",
+            "example": 1500
+          },
+          "duration": {
+            "type": "number",
+            "description": "number of months the membership is valid for",
+            "example": 3
+          },
+          "valid-till": {
+            "type": "string",
+            "format": "date",
+            "description": "Pass expiry date"
+          },
+          "window": {
+            "type": "string",
+            "description": "Pass expiry date",
+            "example": [
+              "valid",
+              "expired"
+            ]
+          }
+        }
+      },
+      "MembershipOutputObject": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "example": 201
+          },
+          "membership": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/MembershipObject"
+              }
+            ]
+          },
+          "pass": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PassObject"
+              }
+            ]
+          }
+        }
+      },
+      "AllMembershipsList": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/MembershipEntity"
+        },
+        "description": "Paginated List of Passes Object"
+      },
+      "CreateStudioRequest": {
+        "type": "object",
+        "properties": {
+          "user-id": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/resourceId"
+              }
+            ],
+            "description": "user-id of registered user as owner role"
+          },
+          "studio": {
+            "$ref": "#/components/schemas/StudioRequest"
+          }
+        }
+      },
+      "StudioRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "registered studio name",
+            "example": "Johnson Fitness"
+          },
+          "geolocation": {
+            "$ref": "#/components/schemas/GeolocationObject"
+          },
+          "established_since": {
+            "type": "string",
+            "format": "date"
+          },
+          "category-id": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/resourceId"
+              }
+            ],
+            "description": "category-id to assign to the studio"
+          },
+          "address": {
+            "type": "string",
+            "description": "full address of the studio",
+            "example": "Near Gandhi Marg, Raia, Salcete, South-Goa"
+          },
+          "pincode": {
+            "type": "number",
+            "description": "area pincode of the address provided",
+            "example": 403720
+          },
+          "type": {
+            "type": "string",
+            "description": "studio facility type",
+            "example": [
+              "Gym",
+              "Yoga",
+              "Calisthinics"
+            ]
+          }
+        }
+      },
+      "StudioOutputObject": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "example": 201
+          },
+          "studio": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StudioObject"
+              }
+            ]
+          }
+        }
+      },
+      "StudioObject": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "unique identifier of pass"
+          },
+          "name": {
+            "type": "string",
+            "description": "registered studio name",
+            "example": "Johnson Fitness"
+          },
+          "geolocation": {
+            "$ref": "#/components/schemas/GeolocationObject"
+          },
+          "established_since": {
+            "type": "string",
+            "format": "date"
+          },
+          "category": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CategoryDTOObject"
+              }
+            ]
+          },
+          "address": {
+            "type": "string",
+            "description": "full address of the studio",
+            "example": "Near Gandhi Marg, Raia, Salcete, South-Goa"
+          },
+          "pincode": {
+            "type": "number",
+            "description": "area pincode of the address provided",
+            "example": 403720
+          },
+          "type": {
+            "type": "string",
+            "description": "studio facility type",
+            "example": [
+              "Gym",
+              "Yoga",
+              "Calisthinics"
+            ]
+          }
+        }
+      },
+      "AllStudiosByUserListObject": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/StudioObject"
+        },
+        "description": "Paginated List of Passes Object"
+      },
+      "StudioOutputEntity": {
+        "$ref": "#/components/schemas/StudioObject"
+      },
+      "CategoryDTOObject": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "unique identifier of category"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name given to category",
+            "example": "Gold"
+          }
+        }
+      },
+      "CreateCategoryRequestInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name given to category",
+            "example": "Gold"
+          }
+        }
+      },
+      "AllCategoriesList": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/CategoryDTOObject"
+        },
+        "description": "Paginated List of Passes Object"
+      },
+      "CreateStudioRatingRequest": {
+        "type": "object",
+        "properties": {
+          "member-id": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/resourceId"
+              }
+            ],
+            "description": "member-id of registered user as member role"
+          },
+          "rate": {
+            "type": "number",
+            "format": "double",
+            "description": "User should provide the rating for the studio",
+            "example": 3.6
+          },
+          "feedback": {
+            "type": "string",
+            "description": "Feedback about the studio",
+            "example": "Something about the rating, and studio"
+          }
+        }
+      },
+      "AllStudioRatingsList": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/StudioRatingDTOObject"
+        },
+        "description": "Paginated List of Passes Object"
+      },
+      "StudioRatingDTOObject": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/resourceId"
+              }
+            ],
+            "description": "ratings id for the studio"
+          },
+          "rate": {
+            "type": "number",
+            "format": "double",
+            "description": "User should provide the rating for the studio",
+            "example": 3.6
+          },
+          "feedback": {
+            "type": "string",
+            "description": "Feedback about the studio",
+            "example": "Something about the rating, and studio"
+          }
+        }
+      },
+      "CreateStudioEntryLogRequest": {
+        "type": "object",
+        "properties": {
+          "member-id": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/resourceId"
+              }
+            ],
+            "description": "registered user as member, member-id for the studio entry log"
+          },
+          "studio-id": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/resourceId"
+              }
+            ],
+            "description": "studio-id for auditing the studio entry"
+          }
+        }
+      }
+    },
+    "responses": {
+      "RegisterUserOutput": {
+        "description": "Created",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ResourceCreatedObject"
+            }
+          }
+        }
+      },
+      "LoginOutput": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/LoginTokenObject"
+            }
+          }
+        }
+      },
+      "UserOutput": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UserObject"
+            }
+          }
+        }
+      },
+      "CreatePassOutput": {
+        "description": "Created",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/PassOutputObject"
+            }
+          }
+        }
+      },
+      "GetPassesOutput": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AllPassesList"
+            }
+          }
+        }
+      },
+      "GetPassOutput": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/PassOutputObject"
+            }
+          }
+        }
+      },
+      "CreateMembershipOutput": {
+        "description": "Created",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/MembershipOutputObject"
+            }
+          }
+        }
+      },
+      "GetMembershipOutput": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/MembershipOutputObject"
+            }
+          }
+        }
+      },
+      "GetMembershipsOutput": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AllMembershipsList"
+            }
+          }
+        }
+      },
+      "CreateStudioOutput": {
+        "description": "Created",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/StudioOutputObject"
+            }
+          }
+        }
+      },
+      "GetStudiosByUserOutput": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AllStudiosByUserListObject"
+            }
+          }
+        }
+      },
+      "GetStudioOutput": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/StudioOutputEntity"
+            }
+          }
+        }
+      },
+      "GetCategoryOutput": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CategoryDTOObject"
+            }
+          }
+        }
+      },
+      "GetCategoriesOutput": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AllCategoriesList"
+            }
+          }
+        }
+      },
+      "CreatedStudioRatingOutput": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ResourceCreatedObject"
+            }
+          }
+        }
+      },
+      "GetAllStudioRatingsOutput": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/AllStudioRatingsList"
+            }
+          }
+        }
+      },
+      "GetStudioRatingOutput": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/StudioRatingDTOObject"
+            }
+          }
+        }
+      },
+      "CreatedMemberStudioLogOutput": {
+        "description": "Created",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ResourceCreatedObject"
+            }
+          }
+        }
+      },
+      "DeleteResourceOutput": {
+        "description": "Created",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ResourceDeleteObject"
+            }
+          }
+        }
+      },
+      "BadRequestError": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/BadRequest"
+            }
+          }
+        }
+      },
+      "NotFoundError": {
+        "description": "Reported when resource is not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ServerError"
+            }
+          }
+        }
+      },
+      "ServerError": {
+        "description": "Runtime Service Exception",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ServerError"
+            }
+          }
+        }
+      }
+    }
+  }
+}
