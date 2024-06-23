@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-FiteasyApplication<fiteasy>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.developerjugad.fiteasy.FiteasyApplication",
+      "projectName": "fiteasy",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
