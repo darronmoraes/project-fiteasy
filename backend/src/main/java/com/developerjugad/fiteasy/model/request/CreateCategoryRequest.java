@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateCategoryInputRequest implements IRequest {
+public class CreateCategoryRequest implements IRequest {
 
     @NotNull
     @NotEmpty

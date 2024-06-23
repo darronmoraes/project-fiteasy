@@ -1,14 +1,16 @@
 package com.developerjugad.fiteasy.model.response;
 
+import com.developerjugad.fiteasy.model.dto.CategoryDTO;
 import com.developerjugad.fiteasy.service.abstraction.IResponse;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Builder
-public class CreateCategoryOutputResponse implements IResponse {
+public class CategoriesResponse implements IResponse {
 
-    private String id;
-    private String name;
+    List<CategoryDTO> categories;
 
 }

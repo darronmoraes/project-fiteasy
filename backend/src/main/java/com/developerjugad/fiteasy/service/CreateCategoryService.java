@@ -2,8 +2,8 @@ package com.developerjugad.fiteasy.service;
 
 import com.developerjugad.fiteasy.db.entity.Category;
 import com.developerjugad.fiteasy.db.service.interfaces.ICategoryService;
-import com.developerjugad.fiteasy.model.request.CreateCategoryInputRequest;
-import com.developerjugad.fiteasy.model.response.CreateCategoryOutputResponse;
+import com.developerjugad.fiteasy.model.request.CreateCategoryRequest;
+import com.developerjugad.fiteasy.model.response.CreateCategoryResponse;
 import com.developerjugad.fiteasy.service.abstraction.RequestHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class CreateCategoryService implements RequestHandler<CreateCategoryInputRequest, CreateCategoryOutputResponse> {
+public class CreateCategoryService implements RequestHandler<CreateCategoryRequest, CreateCategoryResponse> {
 
     @Autowired
     private ICategoryService service;
 
     @Override
-    public CreateCategoryOutputResponse invoke(CreateCategoryInputRequest request) {
+    public CreateCategoryResponse invoke(CreateCategoryRequest request) {
         log.info("Request::create category {}", request.getName());
 
         Category category = mapRequestToEntity(request);
@@ -28,14 +28,14 @@ public class CreateCategoryService implements RequestHandler<CreateCategoryInput
         return mapCategoryToResponse(category);
     }
 
-    private Category mapRequestToEntity(CreateCategoryInputRequest request) {
+    private Category mapRequestToEntity(CreateCategoryRequest request) {
         Category category = new Category();
         category.setName(request.getName());
         return category;
     }
 
-    private CreateCategoryOutputResponse mapCategoryToResponse(Category category) {
-        return CreateCategoryOutputResponse.builder()
+    private CreateCategoryResponse mapCategoryToResponse(Category category) {
+        return CreateCategoryResponse.builder()
                 .id(category.getId())
                 .name(category.getName())
                 .build();

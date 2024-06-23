@@ -1,10 +1,10 @@
 package com.developerjugad.fiteasy.controller;
 
-import com.developerjugad.fiteasy.model.request.CreateCategoryInputRequest;
+import com.developerjugad.fiteasy.model.request.CreateCategoryRequest;
 import com.developerjugad.fiteasy.model.request.GetCategoryRequest;
 import com.developerjugad.fiteasy.model.request.UpdateCategoryRequest;
-import com.developerjugad.fiteasy.model.response.CategoriesOutputResponse;
-import com.developerjugad.fiteasy.model.response.CreateCategoryOutputResponse;
+import com.developerjugad.fiteasy.model.response.CategoriesResponse;
+import com.developerjugad.fiteasy.model.response.CreateCategoryResponse;
 import com.developerjugad.fiteasy.model.response.GetCategoryResponse;
 import com.developerjugad.fiteasy.service.*;
 import com.developerjugad.fiteasy.service.abstraction.FitEasyResponse;
@@ -36,14 +36,14 @@ public class CategoryController {
     private DeleteCategoryService delete;
 
     @PostMapping
-    public ResponseEntity<CreateCategoryOutputResponse> create(@Valid @RequestBody CreateCategoryInputRequest request) {
-        CreateCategoryOutputResponse response = create.invoke(request);
+    public ResponseEntity<CreateCategoryResponse> create(@Valid @RequestBody CreateCategoryRequest request) {
+        CreateCategoryResponse response = create.invoke(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<CategoriesOutputResponse> allCategories(IRequest request) {
-        CategoriesOutputResponse response = getCategories.invoke(request);
+    public ResponseEntity<CategoriesResponse> allCategories(IRequest request) {
+        CategoriesResponse response = getCategories.invoke(request);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
