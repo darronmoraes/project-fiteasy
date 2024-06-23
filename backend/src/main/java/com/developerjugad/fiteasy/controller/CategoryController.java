@@ -2,12 +2,14 @@ package com.developerjugad.fiteasy.controller;
 
 import com.developerjugad.fiteasy.model.request.CreateCategoryInputRequest;
 import com.developerjugad.fiteasy.model.request.GetCategoryRequest;
+import com.developerjugad.fiteasy.model.request.UpdateCategoryRequest;
 import com.developerjugad.fiteasy.model.response.CategoriesOutputResponse;
 import com.developerjugad.fiteasy.model.response.CreateCategoryOutputResponse;
 import com.developerjugad.fiteasy.model.response.GetCategoryResponse;
 import com.developerjugad.fiteasy.service.AllCategoriesService;
 import com.developerjugad.fiteasy.service.CreateCategoryService;
 import com.developerjugad.fiteasy.service.GetCategoryService;
+import com.developerjugad.fiteasy.service.UpdateCategoryService;
 import com.developerjugad.fiteasy.service.abstraction.RequestInput;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -29,6 +31,9 @@ public class CategoryController {
     @Autowired
     private GetCategoryService getCategory;
 
+    @Autowired
+    private UpdateCategoryService update;
+
     @PostMapping
     public ResponseEntity<CreateCategoryOutputResponse> create(@Valid @RequestBody CreateCategoryInputRequest request) {
         CreateCategoryOutputResponse response = create.invoke(request);
@@ -45,6 +50,13 @@ public class CategoryController {
     public ResponseEntity<GetCategoryResponse> allCategories(@NotBlank @PathVariable(value = "id") String categoryId) {
         GetCategoryRequest request = new GetCategoryRequest(categoryId);
         GetCategoryResponse response = getCategory.invoke(request);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<GetCategoryResponse> update(@NotBlank @PathVariable(value = "id") String categoryId, @RequestBody UpdateCategoryRequest request) {
+        request.setId(categoryId);
+        GetCategoryResponse response = update.invoke(request);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

@@ -12,8 +12,8 @@ public interface ICategoryService {
 
     Category findCategoryById(String id);
 
-    Category updateCategoryById(Category category);
+    Category updateCategory(Category category);
 
-    void deleteCategoryById(Category category);
+    void deleteCategory(Category category);
 
 }

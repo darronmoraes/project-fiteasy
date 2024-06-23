@@ -16,6 +16,7 @@ import java.util.Optional;
 public class CategoryService implements ICategoryService {
 
     private static final Logger log = LoggerFactory.getLogger(CategoryService.class);
+
     @Autowired
     private CategoryRepository repository;
 
@@ -42,12 +43,12 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public Category updateCategoryById(Category category) {
+    public Category updateCategory(Category category) {
         return repository.save(category);
     }
 
     @Override
-    public void deleteCategoryById(Category category) {
+    public void deleteCategory(Category category) {
         repository.delete(category);
     }
 }

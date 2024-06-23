@@ -1,7 +1,7 @@
 package com.developerjugad.fiteasy.service;
 
 import com.developerjugad.fiteasy.db.entity.Category;
-import com.developerjugad.fiteasy.db.service.CategoryService;
+import com.developerjugad.fiteasy.db.service.interfaces.ICategoryService;
 import com.developerjugad.fiteasy.model.dto.CategoryDTO;
 import com.developerjugad.fiteasy.model.response.CategoriesOutputResponse;
 import com.developerjugad.fiteasy.service.abstraction.RequestHandler;
@@ -17,7 +17,7 @@ import java.util.List;
 public class AllCategoriesService implements RequestHandler<RequestInput, CategoriesOutputResponse> {
 
     @Autowired
-    private CategoryService service;
+    private ICategoryService service;
 
 
     @Override
