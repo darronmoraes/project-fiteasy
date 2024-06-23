@@ -10,10 +10,10 @@ public interface ICategoryService {
 
     List<Category> findCategories();
 
-    Category findCategoryById(String id, Category category);
+    Category findCategoryById(String id);
 
-    Category updateCategoryById(String id, Category category);
+    Category updateCategoryById(Category category);
 
-    Void deleteCategoryById(String id);
+    void deleteCategoryById(Category category);
 
 }
