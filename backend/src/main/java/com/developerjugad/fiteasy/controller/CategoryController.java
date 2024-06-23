@@ -6,10 +6,8 @@ import com.developerjugad.fiteasy.model.request.UpdateCategoryRequest;
 import com.developerjugad.fiteasy.model.response.CategoriesOutputResponse;
 import com.developerjugad.fiteasy.model.response.CreateCategoryOutputResponse;
 import com.developerjugad.fiteasy.model.response.GetCategoryResponse;
-import com.developerjugad.fiteasy.service.AllCategoriesService;
-import com.developerjugad.fiteasy.service.CreateCategoryService;
-import com.developerjugad.fiteasy.service.GetCategoryService;
-import com.developerjugad.fiteasy.service.UpdateCategoryService;
+import com.developerjugad.fiteasy.model.response.SuccessResponse;
+import com.developerjugad.fiteasy.service.*;
 import com.developerjugad.fiteasy.service.abstraction.RequestInput;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -34,6 +32,9 @@ public class CategoryController {
     @Autowired
     private UpdateCategoryService update;
 
+    @Autowired
+    private DeleteCategoryService delete;
+
     @PostMapping
     public ResponseEntity<CreateCategoryOutputResponse> create(@Valid @RequestBody CreateCategoryInputRequest request) {
         CreateCategoryOutputResponse response = create.invoke(request);
@@ -57,6 +58,14 @@ public class CategoryController {
     public ResponseEntity<GetCategoryResponse> update(@NotBlank @PathVariable(value = "id") String categoryId, @RequestBody UpdateCategoryRequest request) {
         request.setId(categoryId);
         GetCategoryResponse response = update.invoke(request);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<SuccessResponse> update(@NotBlank @PathVariable(value = "id") String categoryId) {
+        GetCategoryRequest request = new GetCategoryRequest();
+        request.setId(categoryId);
+        SuccessResponse response = delete.invoke(request);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
