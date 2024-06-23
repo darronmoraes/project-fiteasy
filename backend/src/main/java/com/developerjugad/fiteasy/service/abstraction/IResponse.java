@@ -1,4 +1,4 @@
 package com.developerjugad.fiteasy.service.abstraction;
 
-public interface RequestInput {
+public interface IResponse {
 }

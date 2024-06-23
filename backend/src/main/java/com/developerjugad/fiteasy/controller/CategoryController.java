@@ -6,9 +6,9 @@ import com.developerjugad.fiteasy.model.request.UpdateCategoryRequest;
 import com.developerjugad.fiteasy.model.response.CategoriesOutputResponse;
 import com.developerjugad.fiteasy.model.response.CreateCategoryOutputResponse;
 import com.developerjugad.fiteasy.model.response.GetCategoryResponse;
-import com.developerjugad.fiteasy.model.response.SuccessResponse;
 import com.developerjugad.fiteasy.service.*;
-import com.developerjugad.fiteasy.service.abstraction.RequestInput;
+import com.developerjugad.fiteasy.service.abstraction.FitEasyResponse;
+import com.developerjugad.fiteasy.service.abstraction.IRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<CategoriesOutputResponse> allCategories(RequestInput request) {
+    public ResponseEntity<CategoriesOutputResponse> allCategories(IRequest request) {
         CategoriesOutputResponse response = getCategories.invoke(request);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -62,10 +62,10 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<SuccessResponse> update(@NotBlank @PathVariable(value = "id") String categoryId) {
+    public ResponseEntity<FitEasyResponse> update(@NotBlank @PathVariable(value = "id") String categoryId) {
         GetCategoryRequest request = new GetCategoryRequest();
         request.setId(categoryId);
-        SuccessResponse response = delete.invoke(request);
+        FitEasyResponse response = delete.invoke(request);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

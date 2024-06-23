@@ -1,4 +1,4 @@
 package com.developerjugad.fiteasy.service.abstraction;
 
-public interface ResponseOutput {
+public interface IRequest {
 }
